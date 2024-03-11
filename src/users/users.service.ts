@@ -4,7 +4,6 @@ import axios from 'axios';
 import { PrismaService } from 'src/database/PrismaServices';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ContractDto } from './dto/contract.dot';
 
 const { email, publickey, apikey } = process.env;
 
@@ -29,7 +28,7 @@ export class UsersService {
     return user;
   }
 
-  async createContract(createContractDto: ContractDto) {
+  async createContract(createContractDto) {
     const user = await this.prisma.contract.create({
       data: createContractDto,
     });

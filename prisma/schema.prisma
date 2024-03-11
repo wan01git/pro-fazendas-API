@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String     @id @default(uuid())
+  id_eduzz  String?    @unique
+  name      String
+  cpf       String?    @unique
+  email     String //@unique
+  phone     String?
+  contracts Contract[]
+
+  @@map("users")
+}
+
+model Contract {
+  id                  String    @id @default(uuid())
+  id_eduzz            String    @unique
+  start_date          DateTime
+  update_date         DateTime?
+  status              String
+  invoices            Int
+  cancel_data         DateTime?
+  cancel_reason       DateTime?
+  user_observations   String?
+  product_id          Int
+  product_name        String
+  value               Float
+  payment_method      String
+  payment_last_date   DateTime
+  payment_frequency   Int
+  payment_repeat_type String
+  subscription_value  Float
+  next_charge         DateTime
+  responsible         User      @relation(fields: [user_id], references: [id])
+  user_id             String
+
+  @@map("contracts")
+}
